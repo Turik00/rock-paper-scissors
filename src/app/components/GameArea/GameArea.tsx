@@ -4,6 +4,7 @@ import RulesModal from '../Rules/RulesModal';
 import GameBoard from '../GameBoard/GameBoard';
 import RulesButton from '../Rules/RulesButton';
 import React, { useState } from 'react';
+import StandoffBoard from '../StandoffBoard/StandoffBoard';
 
 const marginSize = '2.5rem';
 const Wrapper = styled.div`
@@ -35,6 +36,7 @@ const GameArea = () => {
       <Wrapper>
         <Header />
         <GameBoard />
+        {/* <StandoffBoard /> */}
         <RulesArea>
           <RulesButton setShowModalHandler={setShowModal}/>
         </RulesArea>

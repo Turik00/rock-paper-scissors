@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { circleDiameter } from '../Moves/BasicMove/BasicMove';
 import PaperMove from '../Moves/PaperMove/PaperMove';
 import RockMove from '../Moves/RockMove/RockMove';
 import ScissorsMove from '../Moves/ScissorsMove/ScissorsMove';
 
+const circleDiameter = 6;
 const Wrapper = styled.div`
   width: 100%;
   height: 80%;
@@ -43,11 +43,11 @@ const GameBoard = () => {
     <Wrapper>
       <Triangle>
         <TriangleTop>
-          <PaperMove></PaperMove>
-          <ScissorsMove></ScissorsMove>
+          <PaperMove circleDiameter={circleDiameter}></PaperMove>
+          <ScissorsMove circleDiameter={circleDiameter}></ScissorsMove>
         </TriangleTop>
         <TriangleBottom>
-          <RockMove></RockMove>
+          <RockMove circleDiameter={circleDiameter}></RockMove>
         </TriangleBottom>
       </Triangle>
     </Wrapper>
