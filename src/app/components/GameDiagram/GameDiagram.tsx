@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import PaperMove from '../Moves/PaperMove/PaperMove';
-import RockMove from '../Moves/RockMove/RockMove';
-import ScissorsMove from '../Moves/ScissorsMove/ScissorsMove';
+import PaperHandGesture from '../HandGestures/PaperHandGesture/PaperHandGesture';
+import RockHandGesture from '../HandGestures/RockHandGesture/RockHandGesture';
+import ScissorsHandGesture from '../HandGestures/ScissorsHandGesture/ScissorsHandGesture';
 
 const circleDiameter = 6;
 const Wrapper = styled.div`
@@ -38,20 +38,20 @@ const TriangleBottom = styled(TriangleBase)`
   bottom: 0;
 `;
 
-const GameBoard = () => {
+const GameDiagram = () => {
   return (
     <Wrapper>
       <Triangle>
         <TriangleTop>
-          <PaperMove circleDiameter={circleDiameter}></PaperMove>
-          <ScissorsMove circleDiameter={circleDiameter}></ScissorsMove>
+          <PaperHandGesture circleDiameter={circleDiameter}></PaperHandGesture>
+          <ScissorsHandGesture circleDiameter={circleDiameter}></ScissorsHandGesture>
         </TriangleTop>
         <TriangleBottom>
-          <RockMove circleDiameter={circleDiameter}></RockMove>
+          <RockHandGesture circleDiameter={circleDiameter}></RockHandGesture>
         </TriangleBottom>
       </Triangle>
     </Wrapper>
   );
 };
 
-export default GameBoard;
+export default GameDiagram;

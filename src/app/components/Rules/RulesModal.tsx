@@ -50,8 +50,8 @@ export const CloseButton = styled.div`
 export const RulesDiagram = styled.div`
     background-repeat: no-repeat;
     background-size: contain;
-    width 85%;
-    aspect-ratio: 1/1;
+    width: 100%;
+    height: 100%;
     background-image: url(/images/image-rules.svg);
     margin: 1rem 3rem 0 3rem;
 `;

@@ -5,7 +5,7 @@ export interface PieceProps {
   header: string;
 }
 
-const PieceWrapper = styled.div`
+const GestureWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -18,13 +18,13 @@ const Header = styled.span`
   font-weight: bold;
 `;
 
-const StandoffPiece = (props: PieceProps) => {
+const StandoffGesture = (props: PieceProps) => {
   return (
-    <PieceWrapper>
+    <GestureWrapper>
       <Header>{props.header}</Header>
       {props.children}
-    </PieceWrapper>
+    </GestureWrapper>
   );
 };
 
-export default StandoffPiece;
+export default StandoffGesture;

@@ -1,7 +1,7 @@
 import Header from '../Header/Header';
 import styled from 'styled-components';
 import RulesModal from '../Rules/RulesModal';
-import GameBoard from '../GameBoard/GameBoard';
+import GameDiagram from '../GameDiagram/GameDiagram';
 import RulesButton from '../Rules/RulesButton';
 import React, { useState } from 'react';
 import StandoffBoard from '../StandoffBoard/StandoffBoard';
@@ -9,33 +9,34 @@ import StandoffBoard from '../StandoffBoard/StandoffBoard';
 const marginSize = '2.5rem';
 const Wrapper = styled.div`
   width: 35vw;
-  min-width: 20rem;
+  min-width: 38rem;
   height: calc(100% - ${marginSize});
   margin: ${marginSize};
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 500px) {
+    width: 90vw;
+  }
 `;
 
 const RulesArea = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  @media (max-width: 500px) {
-    align-items: center;
-    justify-content: center;
-  }
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
 `;
 
 export interface RulesModalProps {
     setShowModalHandler: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// TODO: GameBoard or StandoffBoard will be selected by the state of the store
 const GameArea = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <React.Fragment>
       <Wrapper>
         <Header />
-        <GameBoard />
+        <GameDiagram />
         {/* <StandoffBoard /> */}
         <RulesArea>
           <RulesButton setShowModalHandler={setShowModal}/>

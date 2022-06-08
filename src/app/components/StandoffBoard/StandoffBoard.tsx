@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import PaperMove from '../Moves/PaperMove/PaperMove';
-import RockMove from '../Moves/RockMove/RockMove';
-import StandoffPiece from '../StandoffPiece/StandoffPiece';
+import PaperHandGesture from '../HandGestures/PaperHandGesture/PaperHandGesture';
+import RockHandGesture from '../HandGestures/RockHandGesture/RockHandGesture';
+import StandoffGesture from '../StandoffGesture/StandoffGesture';
 import StandoffPlayAgain from '../StandoffPlayAgain/StandoffPlayAgain';
 
 const Wrapper = styled.div`
@@ -15,13 +15,13 @@ const moveCircleDiameter = 10;
 const StandoffBoard = () => {
   return (
     <Wrapper>
-      <StandoffPiece header={'YOU PICKED'}>
-        <PaperMove circleDiameter={moveCircleDiameter} hasHover={false}/>
-      </StandoffPiece>
+      <StandoffGesture header={'YOU PICKED'}>
+        <PaperHandGesture circleDiameter={moveCircleDiameter} hasHover={false}/>
+      </StandoffGesture>
       <StandoffPlayAgain />
-      <StandoffPiece header={'THE HOUSE PICKED'}>
-        <RockMove circleDiameter={moveCircleDiameter} hasHover={false}/>
-      </StandoffPiece>
+      <StandoffGesture header={'THE HOUSE PICKED'}>
+        <RockHandGesture circleDiameter={moveCircleDiameter} hasHover={false}/>
+      </StandoffGesture>
     </Wrapper>
   );
 };
