@@ -8,7 +8,7 @@ export interface BasicGestureProps {
   children?: React.ReactNode;
   borderGradient?: string;
   circleDiameter?: number;
-  hasHover?: boolean;
+  isActive?: boolean;
   gesture?: Gestures;
   isBlank?: boolean;
 }
@@ -27,9 +27,9 @@ const Circle = styled(BlankCircle)`
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
-  cursor: ${(props: BasicGestureProps) => (props.hasHover ? 'pointer;' : 'auto;')}
+  cursor: ${(props: BasicGestureProps) => (props.isActive ? 'pointer;' : 'auto;')}
   ${(props: BasicGestureProps) =>
-    props.hasHover &&
+    props.isActive &&
     `&:hover {
         transform: scale(1.3);
       }
@@ -49,11 +49,11 @@ const BasicHandGesture = (props: BasicGestureProps) => {
   const dispatch = useAppDispatch();
 
   const gestureClickHandler = useCallback(() => {
-    if (props.gesture == null) {
+    if (props.gesture == null || props.isActive === false) {
       return;
     }
     dispatch(selectGesture(props.gesture));
-  }, [props.gesture, dispatch]);
+  }, [props.gesture, props.isActive, dispatch]);
 
   return (
     <React.Fragment>
@@ -61,7 +61,7 @@ const BasicHandGesture = (props: BasicGestureProps) => {
         <Circle
           borderGradient={props.borderGradient}
           circleDiameter={props.circleDiameter ?? 6}
-          hasHover={props.hasHover ?? true}
+          isActive={props.isActive ?? true}
           onClick={gestureClickHandler}
         >
           {props.children}

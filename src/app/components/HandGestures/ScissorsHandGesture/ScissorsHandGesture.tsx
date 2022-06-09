@@ -11,7 +11,7 @@ const ScissorsHandGesture = (props: BasicGestureProps) => {
     <BasicHandGesture
       borderGradient="hsl(39, 89%, 49%),hsl(40, 84%, 53%)"
       circleDiameter={props.circleDiameter}
-      hasHover={props.hasHover}
+      isActive={props.isActive}
       gesture={Gestures.scissors}
     >
       <ScissorsBg />

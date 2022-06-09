@@ -21,13 +21,13 @@ const moveCircleDiameter = 10;
 const gestureComponentFactory = (gesture?: Gestures): React.ReactNode => {
   switch (gesture) {
     case Gestures.paper:
-      return <PaperHandGesture circleDiameter={moveCircleDiameter} hasHover={false} />;
+      return <PaperHandGesture circleDiameter={moveCircleDiameter} isActive={false} />;
     case Gestures.rock:
-      return <RockHandGesture circleDiameter={moveCircleDiameter} hasHover={false} />;
+      return <RockHandGesture circleDiameter={moveCircleDiameter} isActive={false} />;
     case Gestures.scissors:
-      return <ScissorsHandGesture circleDiameter={moveCircleDiameter} hasHover={false} />;
+      return <ScissorsHandGesture circleDiameter={moveCircleDiameter} isActive={false} />;
     default:
-      return <BasicHandGesture circleDiameter={moveCircleDiameter} hasHover={false} />;
+      return <BasicHandGesture circleDiameter={moveCircleDiameter} isActive={false} />;
   }
 };
 

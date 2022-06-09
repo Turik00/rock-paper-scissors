@@ -15,14 +15,13 @@ const Wrapper = styled.div`
 
 const ScoreSpan = styled.span`
   color: hsl(229, 64%, 46%);
-  font-size: 0.8rem;
+  font-size: 1rem;
 `;
 
 const ScoreNumberSpan = styled(ScoreSpan)`
   font-size: 2.5rem;
 `;
 
-// TODO: ScoreNumberSpan will be recieved from the store
 const Score = () => {
   const gameState = useAppSelector(selectGameState);
   return (

@@ -11,7 +11,7 @@ const RockHandGesture = (props: BasicGestureProps) => {
     <BasicHandGesture
       borderGradient="hsl(349, 71%, 52%),hsl(349, 70%, 56%)"
       circleDiameter={props.circleDiameter}
-      hasHover={props.hasHover}
+      isActive={props.isActive}
       gesture={Gestures.rock}
     >
       <RockBg />

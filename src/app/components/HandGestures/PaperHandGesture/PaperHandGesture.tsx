@@ -11,7 +11,7 @@ const PaperHandGesture = (props: BasicGestureProps) => {
     <BasicHandGesture
       borderGradient="hsl(230, 89%, 62%),hsl(230, 89%, 65%)"
       circleDiameter={props.circleDiameter}
-      hasHover={props.hasHover}
+      isActive={props.isActive}
       gesture={Gestures.paper}
     >
       <PaperBg />
