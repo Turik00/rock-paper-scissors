@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { defaultColor } from '../../consts/css-consts';
+import { selectGameState } from '../../store/game-slice';
+import { useAppSelector } from '../../store/hooks';
 
 const Wrapper = styled.div`
   background-color: ${defaultColor};
@@ -22,10 +24,11 @@ const ScoreNumberSpan = styled(ScoreSpan)`
 
 // TODO: ScoreNumberSpan will be recieved from the store
 const Score = () => {
+  const gameState = useAppSelector(selectGameState);
   return (
     <Wrapper>
       <ScoreSpan>score</ScoreSpan>
-      <ScoreNumberSpan>12</ScoreNumberSpan>
+      <ScoreNumberSpan>{gameState.score}</ScoreNumberSpan>
     </Wrapper>
   );
 };

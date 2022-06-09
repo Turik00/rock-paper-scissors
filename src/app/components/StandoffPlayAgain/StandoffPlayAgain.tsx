@@ -1,5 +1,8 @@
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { defaultColor } from '../../consts/css-consts';
+import { playAgain } from '../../store/game-slice';
+import { useAppDispatch } from '../../store/hooks';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,10 +35,16 @@ const Button = styled.button`
 `;
 
 const StandoffPlayAgain = () => {
+  const dispatch = useAppDispatch();
+
+  const playAgainHandler = useCallback(() => {
+    dispatch(playAgain());
+  }, [dispatch]);
+
   return (
     <Wrapper>
-      <VictoryText>{'YOU'} WIN</VictoryText>
-      <Button>PLAY AGAIN</Button>
+      <VictoryText>YOU {'WIN'}</VictoryText>
+      <Button onClick={playAgainHandler}>PLAY AGAIN</Button>
     </Wrapper>
   );
 };

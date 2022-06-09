@@ -5,6 +5,8 @@ import GameDiagram from '../GameDiagram/GameDiagram';
 import RulesButton from '../Rules/RulesButton';
 import React, { useState } from 'react';
 import StandoffBoard from '../StandoffBoard/StandoffBoard';
+import { useAppSelector } from '../../store/hooks';
+import { GameStatus, selectGameState } from '../../store/game-slice';
 
 const marginSize = '2.5rem';
 const Wrapper = styled.div`
@@ -26,23 +28,22 @@ const RulesArea = styled.div`
 `;
 
 export interface RulesModalProps {
-    setShowModalHandler: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowModalHandler: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// TODO: GameBoard or StandoffBoard will be selected by the state of the store
 const GameArea = () => {
+  const gameState = useAppSelector(selectGameState);
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <React.Fragment>
       <Wrapper>
         <Header />
-        <GameDiagram />
-        {/* <StandoffBoard /> */}
+        {gameState.status === GameStatus.pendingPlayerGesture ? <GameDiagram /> : <StandoffBoard />}
         <RulesArea>
-          <RulesButton setShowModalHandler={setShowModal}/>
+          <RulesButton setShowModalHandler={setShowModal} />
         </RulesArea>
       </Wrapper>
-      {showModal ? <RulesModal setShowModalHandler={setShowModal}/> : null}
+      {showModal ? <RulesModal setShowModalHandler={setShowModal} /> : null}
     </React.Fragment>
   );
 };

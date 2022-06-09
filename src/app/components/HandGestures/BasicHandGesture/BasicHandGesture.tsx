@@ -1,11 +1,15 @@
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { defaultColor } from '../../../consts/css-consts';
+import { Gestures, selectGesture } from '../../../store/game-slice';
+import { useAppDispatch } from '../../../store/hooks';
 
 export interface BasicGestureProps {
   children?: React.ReactNode;
   borderGradient?: string;
   circleDiameter?: number;
   hasHover?: boolean;
+  gesture?: Gestures;
 }
 
 const Circle = styled.div`
@@ -17,7 +21,8 @@ const Circle = styled.div`
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
-  cursor: pointer;
+  cursor: ${(props: BasicGestureProps) =>
+    props.hasHover ? 'pointer;' : 'auto;'}
   ${(props: BasicGestureProps) =>
     props.hasHover &&
     `&:hover {
@@ -38,8 +43,22 @@ export const BgBase = styled.div`
 `;
 
 const BasicHandGesture = (props: BasicGestureProps) => {
+  const dispatch = useAppDispatch();
+
+  const gestureClickHandler = useCallback(() => {
+    if (props.gesture == null) {
+      return;
+    }
+    dispatch(selectGesture(props.gesture));
+  }, [props.gesture, dispatch]);
+
   return (
-    <Circle borderGradient={props.borderGradient} circleDiameter={props.circleDiameter ?? 6} hasHover={props.hasHover ?? true}>
+    <Circle
+      borderGradient={props.borderGradient}
+      circleDiameter={props.circleDiameter ?? 6}
+      hasHover={props.hasHover ?? true}
+      onClick={gestureClickHandler}
+    >
       {props.children}
     </Circle>
   );

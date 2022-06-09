@@ -23,7 +23,7 @@ export const RulesHeader = styled.div`
   height: 3rem;
   display: flex;
   justify-content: space-between;
-  padding: 2rem 2rem 0 2rem;
+  padding: 2rem;
 `;
 
 export const RulesText = styled.span`
@@ -50,7 +50,6 @@ export const CloseButton = styled.div`
 export const RulesDiagram = styled.div`
     background-repeat: no-repeat;
     background-size: contain;
-    width: 100%;
     height: 100%;
     background-image: url(/images/image-rules.svg);
     margin: 1rem 3rem 0 3rem;

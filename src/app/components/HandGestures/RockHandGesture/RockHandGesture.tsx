@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Gestures } from '../../../store/game-slice';
 import BasicHandGesture, { BasicGestureProps, BgBase } from '../BasicHandGesture/BasicHandGesture';
 
 const RockBg = styled(BgBase)`
@@ -7,7 +8,12 @@ const RockBg = styled(BgBase)`
 
 const RockHandGesture = (props: BasicGestureProps) => {
   return (
-    <BasicHandGesture borderGradient="hsl(349, 71%, 52%),hsl(349, 70%, 56%)" circleDiameter={props.circleDiameter} hasHover={props.hasHover}>
+    <BasicHandGesture
+      borderGradient="hsl(349, 71%, 52%),hsl(349, 70%, 56%)"
+      circleDiameter={props.circleDiameter}
+      hasHover={props.hasHover}
+      gesture={Gestures.rock}
+    >
       <RockBg />
     </BasicHandGesture>
   );
