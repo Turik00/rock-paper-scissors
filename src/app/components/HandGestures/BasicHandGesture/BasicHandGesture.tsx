@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { defaultColor } from '../../../consts/css-consts';
 import { Gestures, selectGesture } from '../../../store/game-slice';
@@ -10,19 +10,24 @@ export interface BasicGestureProps {
   circleDiameter?: number;
   hasHover?: boolean;
   gesture?: Gestures;
+  isBlank?: boolean;
 }
 
-const Circle = styled.div`
-  background-color: ${defaultColor};
+const BlankCircle = styled.div`
   height: ${(props: BasicGestureProps) => props.circleDiameter}rem;
   width: ${(props: BasicGestureProps) => props.circleDiameter}rem;
   border-radius: 50%;
+  border: 1rem solid transparent;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) padding-box,
+    linear-gradient(transparent, transparent) border-box;
+`;
+
+const Circle = styled(BlankCircle)`
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
-  cursor: ${(props: BasicGestureProps) =>
-    props.hasHover ? 'pointer;' : 'auto;'}
+  cursor: ${(props: BasicGestureProps) => (props.hasHover ? 'pointer;' : 'auto;')}
   ${(props: BasicGestureProps) =>
     props.hasHover &&
     `&:hover {
@@ -31,8 +36,6 @@ const Circle = styled.div`
     `}
   background: linear-gradient(${defaultColor}, ${defaultColor}) padding-box,
     linear-gradient(${(props: BasicGestureProps) => props.borderGradient}) border-box;
-  border-radius: 50em;
-  border: 0.7rem solid transparent;
 `;
 
 export const BgBase = styled.div`
@@ -53,14 +56,20 @@ const BasicHandGesture = (props: BasicGestureProps) => {
   }, [props.gesture, dispatch]);
 
   return (
-    <Circle
-      borderGradient={props.borderGradient}
-      circleDiameter={props.circleDiameter ?? 6}
-      hasHover={props.hasHover ?? true}
-      onClick={gestureClickHandler}
-    >
-      {props.children}
-    </Circle>
+    <React.Fragment>
+      {props.children != null ? (
+        <Circle
+          borderGradient={props.borderGradient}
+          circleDiameter={props.circleDiameter ?? 6}
+          hasHover={props.hasHover ?? true}
+          onClick={gestureClickHandler}
+        >
+          {props.children}
+        </Circle>
+      ) : (
+        <BlankCircle circleDiameter={props.circleDiameter ?? 6}/>
+      )}
+    </React.Fragment>
   );
 };
 
