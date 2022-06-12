@@ -13,20 +13,20 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const TextAreat = styled.p`
+const TextArea = styled.p`
   margin: 0;
 `;
 
 const Header = () => {
   return (
     <Wrapper>
-      <TextAreat>
+      <TextArea>
         ROCK
         <br />
         PAPER
         <br />
         SCISSORS
-      </TextAreat>
+      </TextArea>
       <Score />
     </Wrapper>
   );
