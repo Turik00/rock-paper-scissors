@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { defaultColor } from '../../consts/css-consts';
+import { defaultBlue, defaultColor } from '../../consts/css-consts';
 import { selectGameState } from '../../store/game-slice';
 import { useAppSelector } from '../../store/hooks';
 
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const ScoreSpan = styled.span`
-  color: hsl(229, 64%, 46%);
+  color: ${defaultBlue};
   font-size: 1rem;
 `;
 

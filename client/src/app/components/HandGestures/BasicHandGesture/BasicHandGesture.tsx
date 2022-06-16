@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { globalExtended } from '../../../consts/consts';
 import { defaultColor } from '../../../consts/css-consts';
 import { Gestures, selectGesture } from '../../../store/game-slice';
 import { useAppDispatch } from '../../../store/hooks';
 
+declare var window: Window & globalExtended;
 export interface BasicGestureProps {
   children?: React.ReactNode;
   borderGradient?: string;
@@ -52,6 +54,7 @@ const BasicHandGesture = (props: BasicGestureProps) => {
     if (props.gesture == null || props.isActive === false) {
       return;
     }
+    window.multiplayerSocket?.emit('playerMove', props.gesture);
     dispatch(selectGesture(props.gesture));
   }, [props.gesture, props.isActive, dispatch]);
 

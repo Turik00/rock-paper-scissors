@@ -1,7 +1,3 @@
-type globalExtended = typeof globalThis & {
-  players: IPlayers;
-};
-
 interface IPlayingPlayers {
   playersMap: Map<string, string>;
   reversedPlayersMap: Map<string, string>;
@@ -13,7 +9,7 @@ interface IWaitingPlayers {
   determinedPlayers: string[];
 }
 
-interface IPlayers {
+export interface IPlayers {
   playingPlayers: IPlayingPlayers;
   waitingPlayers: IWaitingPlayers;
 }
@@ -30,7 +26,3 @@ export enum Gestures {
   paper,
   scissors,
 }
-
-export const globalObject = () => {
-  return global as globalExtended;
-};

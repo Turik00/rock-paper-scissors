@@ -1,29 +1,14 @@
 import styled from 'styled-components';
-import { defaultColor } from '../../consts/css-consts';
+import { ModalWrapper } from '../../consts/css-consts';
 import { RulesModalProps } from '../GameArea/GameArea';
 
-export const RulesModalWrapper = styled.div`
-  background: ${defaultColor};
-  aspect-ratio: 1/1;
-  width: 30vw;
-  min-width: 20rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: 1rem;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
 
 export const RulesHeader = styled.div`
   height: 3rem;
   display: flex;
   justify-content: space-between;
   padding: 2rem;
+  width: 30rem;
 `;
 
 export const RulesText = styled.span`
@@ -50,20 +35,20 @@ export const CloseButton = styled.div`
 export const RulesDiagram = styled.div`
     background-repeat: no-repeat;
     background-size: contain;
-    height: 100%;
+    height: 25rem;
     background-image: url(/images/image-rules.svg);
-    margin: 1rem 3rem 0 3rem;
+    margin: 1rem 3rem 1rem 3rem;
 `;
 
 const RulesModal = (props: RulesModalProps) => {
   return (
-    <RulesModalWrapper>
+    <ModalWrapper>
       <RulesHeader>
         <RulesText>Rules</RulesText>
         <CloseButton onClick={() => props.setShowModalHandler(false)}/>
       </RulesHeader>
       <RulesDiagram></RulesDiagram>
-    </RulesModalWrapper>
+    </ModalWrapper>
   );
 };
 

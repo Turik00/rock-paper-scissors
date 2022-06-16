@@ -2,8 +2,6 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import GameArea from './components/GameArea/GameArea';
 import { defaultColor } from './consts/css-consts';
-import { io, Socket } from 'socket.io-client';
-import { backendSocketApi } from './consts/consts';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -35,10 +33,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const socket = io(backendSocketApi);
-  socket.on('connect', () => {
-    console.log(socket.id);
-  });
   return (
     <React.Fragment>
       <GlobalStyle />

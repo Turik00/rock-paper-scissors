@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import RulesModal from '../Rules/RulesModal';
 import GameDiagram from '../GameDiagram/GameDiagram';
 import RulesButton from '../Rules/RulesButton';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import StandoffBoard from '../StandoffBoard/StandoffBoard';
 import { useAppSelector } from '../../store/hooks';
 import { GameStatus, selectGameState } from '../../store/game-slice';
+import WaitingForPlayerToJoin from '../WaitingForPlayerToJoin/WaitingForPlayerToJoin';
+import ChooseGameMode from '../ChooseGameMode/ChooseGameMode';
+import ResetButton from '../ResetButton/ResetButton';
 
 const marginSize = '2.5rem';
 const Wrapper = styled.div`
@@ -21,10 +24,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const RulesArea = styled.div`
+const ButtonsArea = styled.div`
   position: fixed;
   bottom: 3rem;
   right: 3rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  height: 2.1rem;
 `;
 
 export interface RulesModalProps {
@@ -34,14 +41,27 @@ export interface RulesModalProps {
 const GameArea = () => {
   const gameState = useAppSelector(selectGameState);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const detetmineGameStatus = useMemo<JSX.Element>(() => {
+    switch (gameState.status) {
+      case GameStatus.pendingPlayerGesture:
+        return <GameDiagram />;
+      case GameStatus.pendingGameModeSelection:
+        return <ChooseGameMode />;
+      case GameStatus.pendingOpponentToJoin:
+        return <WaitingForPlayerToJoin />;
+      default:
+        return <StandoffBoard />;
+    }
+  }, [gameState.status]);
   return (
     <React.Fragment>
       <Wrapper>
         <Header />
-        {gameState.status === GameStatus.pendingPlayerGesture ? <GameDiagram /> : <StandoffBoard />}
-        <RulesArea>
+        {detetmineGameStatus}
+        <ButtonsArea>
+          <ResetButton />
           <RulesButton setShowModalHandler={setShowModal} />
-        </RulesArea>
+        </ButtonsArea>
       </Wrapper>
       {showModal ? <RulesModal setShowModalHandler={setShowModal} /> : null}
     </React.Fragment>

@@ -55,7 +55,7 @@ const StandoffBoard = () => {
       {(gameState.status === GameStatus.win || gameState.status === GameStatus.lose || gameState.status === GameStatus.tie) && (
         <StandoffPlayAgain />
       )}
-      <StandoffGesture header={'THE HOUSE PICKED'}>{opponentGestureComponent}</StandoffGesture>
+      <StandoffGesture header={`${gameState.isMultiplayer? 'OTHER PLAYER': 'THE HOUSE'} PICKED`}>{opponentGestureComponent}</StandoffGesture>
     </Wrapper>
   );
 };

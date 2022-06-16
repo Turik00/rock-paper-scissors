@@ -9,6 +9,7 @@ import {
   executeMove,
   getPlayerState,
   playerDisconnect,
+  preparePlayersForNextRound,
 } from './controllers/player-actions.controller';
 
 const app = express();
@@ -45,8 +46,16 @@ io.on('connection', (socket) => {
     if (opponentPlayerId == null) {
       return;
     }
-    io.to(opponentPlayerId).emit('playerStateUpdate', getPlayerState(opponentPlayerId));
-    io.to(socket.id).emit('playerStateUpdate', getPlayerState(socket.id));
+    const opponentState = getPlayerState(opponentPlayerId);
+    console.log(`opponentPlayerId: ${opponentPlayerId} state is:`);
+    console.table(opponentState);
+    const playerState = getPlayerState(socket.id);
+    console.log(`PlayerId: ${socket.id} state is:`);
+    console.table(playerState);
+    io.to(opponentPlayerId).emit('playerStateUpdate', {opponentMove: playerState.move, playerScore: opponentState.score});
+    io.to(socket.id).emit('playerStateUpdate', {opponentMove: opponentState.move, playerScore: playerState.score});
+
+    preparePlayersForNextRound(socket.id, opponentPlayerId);
   });
 
   //TODO: implelemet switch player in the future.
@@ -59,7 +68,6 @@ io.on('connection', (socket) => {
     }
     io.to(opponentPlayerId).emit('opponentDisconnect', null);
 
-    // remove user from playing and waitng list and notify opponent about discconection
   });
 });
 
