@@ -5,9 +5,6 @@ declare var global: typeof globalThis & {
   players: IPlayers;
 };
 
-
-
-
 export const initializePlayerState = () => {
   const playingPlayers = {
     playersMap: new Map<string, string>(),
@@ -106,7 +103,6 @@ export const playerDisconnect = (playerId: string): string | undefined => {
   }
   if (opponentPlayerId != null) {
     global.players.playingPlayers.playersState.delete(opponentPlayerId);
-
   }
 
   return opponentPlayerId;

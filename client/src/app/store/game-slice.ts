@@ -84,6 +84,7 @@ const gameSlice = createSlice({
     selectMultiPlayer: (state) => {
       state.status = GameStatus.pendingOpponentToJoin;
       state.isMultiplayer = true;
+      state.score = 0;
     },
 
     setMultiplayerGameStarted: (state) => {
