@@ -1,5 +1,6 @@
 import { IPlayers, IPlayersState } from '../interfaces';
-import { Gestures }  from '../../client/src/common/types';
+import { GameStatus } from '../../client/src/common/types';
+import { determineStatus } from '../../client/src/common/common-logic';
 
 declare var global: typeof globalThis & {
   players: IPlayers;
@@ -78,12 +79,8 @@ export const getPlayerState = (playerId: string): IPlayersState => {
 };
 
 export const playerDisconnect = (playerId: string): string | undefined => {
-  global.players.waitingPlayers.randomPlayers = global.players.waitingPlayers.randomPlayers.filter(
-    (player) => player !== playerId
-  );
-  global.players.waitingPlayers.determinedPlayers = global.players.waitingPlayers.determinedPlayers.filter(
-    (player) => player !== playerId
-  );
+  global.players.waitingPlayers.randomPlayers = global.players.waitingPlayers.randomPlayers.filter((player) => player !== playerId);
+  global.players.waitingPlayers.determinedPlayers = global.players.waitingPlayers.determinedPlayers.filter((player) => player !== playerId);
 
   global.players.playingPlayers.playersState.delete(playerId);
   let opponentPlayerId = undefined;
@@ -122,44 +119,22 @@ const updateGameState = (playerId: string, opponentPlayerId: string) => {
     global.players.playingPlayers.playersState.set(opponentPlayerId, { ...opponentState!, score: ++opponentState!.score });
   };
 
-  // TODO: consolidate with client victory state
-  if (playersState?.move === Gestures.paper) {
-    if (opponentState?.move === Gestures.paper) {
-      return;
-    }
-    if (opponentState?.move === Gestures.rock) {
+  const gameStatus = determineStatus({
+    playerGesture: playersState?.move,
+    opponentGesture: opponentState?.move,
+    score: -1, // not relevant for this method
+    isMultiplayer: false, // not relevant for this method
+    status: GameStatus.tie // not relevant for this method
+  });
+
+  switch (gameStatus) {
+    case GameStatus.win:
       setPlayerWinState();
       return;
-    }
-    if (opponentState?.move === Gestures.scissors) {
+    case GameStatus.lose:
       setOpponentWinState();
       return;
-    }
-  }
-  if (playersState?.move === Gestures.rock) {
-    if (opponentState?.move === Gestures.paper) {
-      setOpponentWinState();
+    default:
       return;
-    }
-    if (opponentState?.move === Gestures.rock) {
-      return;
-    }
-    if (opponentState?.move === Gestures.scissors) {
-      setPlayerWinState();
-      return;
-    }
-  }
-  if (playersState?.move === Gestures.scissors) {
-    if (opponentState?.move === Gestures.paper) {
-      setPlayerWinState();
-      return;
-    }
-    if (opponentState?.move === Gestures.rock) {
-      setOpponentWinState();
-      return;
-    }
-    if (opponentState?.move === Gestures.scissors) {
-      return;
-    }
   }
 };

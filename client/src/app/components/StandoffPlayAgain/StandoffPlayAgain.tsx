@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
+import { GameStatus } from '../../../common/types';
 import { defaultColor } from '../../consts/css-consts';
-import { GameStatus, playAgain, selectGameState } from '../../store/game-slice';
+import { playAgain, selectGameState } from '../../store/game-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const Wrapper = styled.div`

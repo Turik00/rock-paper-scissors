@@ -6,10 +6,11 @@ import RulesButton from '../Rules/RulesButton';
 import React, { useMemo, useState } from 'react';
 import StandoffBoard from '../StandoffBoard/StandoffBoard';
 import { useAppSelector } from '../../store/hooks';
-import { GameStatus, selectGameState } from '../../store/game-slice';
+import { selectGameState } from '../../store/game-slice';
 import WaitingForPlayerToJoin from '../WaitingForPlayerToJoin/WaitingForPlayerToJoin';
 import ChooseGameMode from '../ChooseGameMode/ChooseGameMode';
 import ResetButton from '../ResetButton/ResetButton';
+import { GameStatus } from '../../../common/types';
 
 const marginSize = '2.5rem';
 const Wrapper = styled.div`

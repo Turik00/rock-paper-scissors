@@ -1,20 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { globalExtended } from '../consts/consts';
 import { AppThunk, RootState } from './store';
-import { Gestures } from '../../common/types';
+import { GameStatus, Gestures } from '../../common/types';
+import { determineStatus } from '../../common/common-logic';
 
 declare var window: Window & globalExtended;
-
-export enum GameStatus {
-  pendingGameModeSelection = -2,
-  pendingOpponentToJoin = -1,
-  pendingPlayerGesture = 0,
-  playerGestureSelected,
-  opponentGestureSelected,
-  win,
-  lose,
-  tie,
-}
 
 export interface GameState {
   score: number;
@@ -134,42 +124,6 @@ export const startMultiplayerGame = (): AppThunk => async (dispatch, getState) =
     dispatch(updateScoreForMultiplayer(payload.playerScore));
   });
   dispatch(setMultiplayerGameStarted());
-};
-
-const determineStatus = (state: GameState) => {
-  if (state.playerGesture === Gestures.paper) {
-    if (state.opponentGesture === Gestures.paper) {
-      return GameStatus.tie;
-    }
-    if (state.opponentGesture === Gestures.rock) {
-      return GameStatus.win;
-    }
-    if (state.opponentGesture === Gestures.scissors) {
-      return GameStatus.lose;
-    }
-  }
-  if (state.playerGesture === Gestures.rock) {
-    if (state.opponentGesture === Gestures.paper) {
-      return GameStatus.lose;
-    }
-    if (state.opponentGesture === Gestures.rock) {
-      return GameStatus.tie;
-    }
-    if (state.opponentGesture === Gestures.scissors) {
-      return GameStatus.win;
-    }
-  }
-  if (state.playerGesture === Gestures.scissors) {
-    if (state.opponentGesture === Gestures.paper) {
-      return GameStatus.win;
-    }
-    if (state.opponentGesture === Gestures.rock) {
-      return GameStatus.lose;
-    }
-    if (state.opponentGesture === Gestures.scissors) {
-      return GameStatus.tie;
-    }
-  }
 };
 
 function resetSharedState(state: GameState) {
