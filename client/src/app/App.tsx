@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import GameArea from './components/GameArea/GameArea';
+import { backendHttpApi } from './consts/consts';
 import { defaultColor } from './consts/css-consts';
 
 const GlobalStyle = createGlobalStyle`
@@ -33,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  // TODO: useEffect to wake up Heroku - needed only because using it
+  useEffect(() => {
+    fetch(backendHttpApi);
+  }, []);
   return (
     <React.Fragment>
       <GlobalStyle />

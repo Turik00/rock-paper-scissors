@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { globalExtended } from '../consts/consts';
 import { AppThunk, RootState } from './store';
+import { Gestures } from '../../common/types';
 
 declare var window: Window & globalExtended;
-export enum Gestures {
-  rock = 0,
-  paper,
-  scissors,
-}
 
 export enum GameStatus {
   pendingGameModeSelection = -2,

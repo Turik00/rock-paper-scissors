@@ -1,5 +1,5 @@
-import { Gestures, IPlayers, IPlayersState } from '../utils';
-
+import { IPlayers, IPlayersState } from '../interfaces';
+import { Gestures }  from '../../client/src/common/types';
 
 declare var global: typeof globalThis & {
   players: IPlayers;

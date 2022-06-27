@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Gestures } from '../../../store/game-slice';
+import { Gestures } from '../../../../common/types';
 import BasicHandGesture, { BasicGestureProps, BgBase } from '../BasicHandGesture/BasicHandGesture';
 
 const PaperBg = styled(BgBase)`

@@ -2,8 +2,10 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { globalExtended } from '../../../consts/consts';
 import { defaultColor } from '../../../consts/css-consts';
-import { Gestures, selectGesture } from '../../../store/game-slice';
+import { selectGesture } from '../../../store/game-slice';
 import { useAppDispatch } from '../../../store/hooks';
+import {Gestures} from '../../../../common/types';
+
 
 declare var window: Window & globalExtended;
 export interface BasicGestureProps {

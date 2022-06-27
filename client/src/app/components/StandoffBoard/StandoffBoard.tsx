@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { GameStatus, Gestures, retrieveOpponentGesture, selectGameState } from '../../store/game-slice';
+import { GameStatus, retrieveOpponentGesture, selectGameState } from '../../store/game-slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import BasicHandGesture from '../HandGestures/BasicHandGesture/BasicHandGesture';
 import PaperHandGesture from '../HandGestures/PaperHandGesture/PaperHandGesture';
@@ -9,6 +9,7 @@ import RockHandGesture from '../HandGestures/RockHandGesture/RockHandGesture';
 import ScissorsHandGesture from '../HandGestures/ScissorsHandGesture/ScissorsHandGesture';
 import StandoffGesture from '../StandoffGesture/StandoffGesture';
 import StandoffPlayAgain from '../StandoffPlayAgain/StandoffPlayAgain';
+import {Gestures} from '../../../common/types';
 
 const Wrapper = styled.div`
   display: flex;

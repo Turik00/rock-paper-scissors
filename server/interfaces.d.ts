@@ -1,3 +1,5 @@
+import { Gestures } from '../client/src/common/types';
+
 interface IPlayingPlayers {
   playersMap: Map<string, string>;
   reversedPlayersMap: Map<string, string>;
@@ -17,12 +19,4 @@ export interface IPlayers {
 export interface IPlayersState {
   move: Gestures;
   score: number;
-}
-
-// TODO: consolidate with client's enum
-export enum Gestures {
-  noMove = -1,
-  rock = 0,
-  paper,
-  scissors,
 }
