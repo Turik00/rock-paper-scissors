@@ -74,7 +74,7 @@ const gameSlice = createSlice({
     selectSinglePlayer: (state) => {
       state.status = GameStatus.pendingPlayerGesture;
       state.isMultiplayer = false;
-      state.score = 0;
+      resetSharedState(state);
     },
 
     selectMultiPlayer: (state) => {
@@ -171,3 +171,11 @@ const determineStatus = (state: GameState) => {
     }
   }
 };
+
+function resetSharedState(state: GameState) {
+  state.score = 0;
+  state.playerGesture = undefined;
+  state.opponentGesture = undefined;
+  state.multiplayerOpponentId = undefined;
+}
+
