@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { globalExtended } from '../consts/consts';
 import { AppThunk, RootState } from './store';
-import { GameStatus, Gestures } from '../../common/types';
+import { GameStatus, Gestures, GesturesNumber } from '../../common/types';
 import { determineStatus } from '../../common/common-logic';
 
 declare var window: Window & globalExtended;
@@ -77,7 +77,7 @@ const gameSlice = createSlice({
       state.status = GameStatus.pendingPlayerGesture;
     },
 
-    updateScoreForMultiplayer: (state, action: PayloadAction<number>) => {
+    updateScore: (state, action: PayloadAction<number>) => {
       if (!state.isMultiplayer) {
         return;
       }
@@ -97,7 +97,7 @@ export const {
   selectSinglePlayer,
   selectMultiPlayer,
   setMultiplayerGameStarted,
-  updateScoreForMultiplayer,
+  updateScore: updateScoreForMultiplayer,
   opponentPlayerDisconnected,
 } = gameSlice.actions;
 export const selectGameState = (state: RootState) => state.game;
@@ -113,7 +113,7 @@ export const retrieveOpponentGesture = (): AppThunk => async (dispatch, getState
   if (gameState.isMultiplayer) {
     return;
   } else {
-    opponentGesture = Math.floor(Math.random() * 3);
+    opponentGesture = Math.floor(Math.random() * GesturesNumber);
   }
   dispatch(selectOpponentGesture(opponentGesture));
 };
@@ -132,4 +132,3 @@ function resetSharedState(state: GameState) {
   state.opponentGesture = undefined;
   state.multiplayerOpponentId = undefined;
 }
-

@@ -5,6 +5,8 @@ export enum Gestures {
     scissors,
 };
 
+export const GesturesNumber = 3;
+
 export enum GameStatus {
     pendingGameModeSelection = -2,
     pendingOpponentToJoin = -1,

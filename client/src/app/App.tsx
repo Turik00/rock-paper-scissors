@@ -36,7 +36,10 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   // TODO: useEffect to wake up Heroku - needed only because using it
   useEffect(() => {
-    fetch(backendHttpApi);
+    fetch(backendHttpApi).catch(reason =>{
+      console.error(reason);
+    });
+    
   }, []);
   return (
     <React.Fragment>

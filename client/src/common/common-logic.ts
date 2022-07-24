@@ -35,4 +35,5 @@ export const determineStatus = (state: GameState) => {
       return GameStatus.tie;
     }
   }
+  return GameStatus.tie;
 };
