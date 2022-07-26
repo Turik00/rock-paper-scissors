@@ -1,4 +1,5 @@
-import { FormEvent, useRef } from 'react';
+import { Alert, Snackbar } from '@mui/material';
+import { FormEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../../controls/Modal';
 import useSocket from '../../../hooks/useSocket';
@@ -9,13 +10,19 @@ const Form = styled.form`
 `;
 
 const CreateMultiplayerModal = ({ setShowModalHandler }: { setShowModalHandler: React.Dispatch<React.SetStateAction<boolean>> }) => {
+  const [showError, setShowError] = useState<boolean>(false);
   const {socket, socketStartGame} = useSocket();
   const inputEl = useRef<HTMLInputElement>(null);
   const createUserSubmitFormHandler = (event: FormEvent) => {
     event.preventDefault();
     socket?.emit('registerAsDeterminedPlayer', {playerName: inputEl.current?.value});
-    socketStartGame();
-    setShowModalHandler(false);
+    socket?.on('playerAddedToDeterminedPlayers', () => {
+      socketStartGame();
+      setShowModalHandler(false);
+    });
+    socket?.on('playerAlreadyExists', () => {
+      setShowError(true);
+    });
   };
 
   return (
@@ -29,6 +36,11 @@ const CreateMultiplayerModal = ({ setShowModalHandler }: { setShowModalHandler: 
         </fieldset>
         <button type="submit">Create Game</button>
       </Form>
+      <Snackbar open={showError} autoHideDuration={3000} onClose={() => setShowError(false)}>
+        <Alert severity="error" sx={{ width: '100%' }}>
+          User name: <b>{ inputEl.current?.value }</b> already exists!
+        </Alert>
+      </Snackbar>
     </Modal>
   );
 };

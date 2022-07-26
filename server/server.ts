@@ -26,9 +26,10 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
   console.log(`${socket.id} user connected.`);
 
+  // TODO: the following should be REST ??
   socket.on('registerAsDeterminedPlayer', (playerName) => {
     const wasAdded = addPlayerToDeterminedPlayersList(playerName.playerName, socket.id);
-    io.to(socket.id).emit(wasAdded ? 'playerAddedToDeterminedPlayers' : `playerAlreadyExists`);
+    io.to(socket.id).emit(wasAdded ? 'playerAddedToDeterminedPlayers' : 'playerAlreadyExists');
   });
 
   socket.on('joinRandomPlayer', () => {
@@ -39,6 +40,7 @@ io.on('connection', (socket) => {
     SendGameStartedMessage(socket.id, opponentPlayerId);
   });
 
+  // TODO: the following should be REST ??
   socket.on('getAllWaitingDeterminedPlayers', () => {
     const determinedPlayersList = getWaitingDeterminedPlayersList();
     io.to(socket.id).emit('waitingPlayers', {waitingPlayers : determinedPlayersList});

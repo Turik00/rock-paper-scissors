@@ -5,7 +5,7 @@ import { Button } from '../../consts/css-consts';
 import { selectSinglePlayer } from '../../store/game-slice';
 import { useAppDispatch } from '../../store/hooks';
 import CreateMultiplayerModal from '../Multiplayer/CreateMultiplayer/CreateMultiplayer';
-import JoinMultiplayer from '../Multiplayer/JoinMultiplayer/JoinMultiplayer';
+import JoinMultiplayerModal from '../Multiplayer/JoinMultiplayer/JoinMultiplayer';
 import useSocket from '../../hooks/useSocket';
 
 export const Wrapper = styled.div`
@@ -51,7 +51,7 @@ const ChooseGameMode = () => {
         <GameModeButton onClick={() => setShowJoinMultiplayerModal(true)}>Join multiplayer game</GameModeButton>
       </Wrapper>
       {showCreateMultiplayerModal ? <CreateMultiplayerModal setShowModalHandler={setShowCreateMultiplayerModal} /> : null}
-      {showJoinMultiplayerModal ? <JoinMultiplayer setShowModalHandler={setShowJoinMultiplayerModal} /> : null}
+      {showJoinMultiplayerModal ? <JoinMultiplayerModal setShowModalHandler={setShowJoinMultiplayerModal} /> : null}
     </React.Fragment>
   );
 };
