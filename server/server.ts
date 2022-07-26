@@ -10,6 +10,9 @@ import {
   getPlayerState,
   playerDisconnect,
   preparePlayersForNextRound,
+  addPlayerToDeterminedPlayersList,
+  playAgainstDeterminedPlayerAndReturnOpponentPlayerId,
+  getWaitingDeterminedPlayersList,
 } from './controllers/player-actions.controller';
 
 const app = express();
@@ -23,8 +26,9 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
   console.log(`${socket.id} user connected.`);
 
-  socket.on('waitForDeterminedPlayer', () => {
-    //add user to determined players list
+  socket.on('registerAsDeterminedPlayer', (playerName) => {
+    const wasAdded = addPlayerToDeterminedPlayersList(playerName.playerName, socket.id);
+    io.to(socket.id).emit(wasAdded ? 'playerAddedToDeterminedPlayers' : `playerAlreadyExists`);
   });
 
   socket.on('joinRandomPlayer', () => {
@@ -32,14 +36,23 @@ io.on('connection', (socket) => {
     if (opponentPlayerId == null) {
       return;
     }
-    console.log(`starting game between ${socket.id} and ${opponentPlayerId}`);
-    io.to(opponentPlayerId).emit('startingGame', { opponentPlayerId: socket.id });
-    io.to(socket.id).emit('startingGame', { opponentPlayerId: opponentPlayerId });
+    SendGameStartedMessage(socket.id, opponentPlayerId);
   });
 
-  socket.on('joinDeterminedPlayer', (playerSocketId) => {
-    //add user to determined players list
+  socket.on('getAllWaitingDeterminedPlayers', () => {
+    const determinedPlayersList = getWaitingDeterminedPlayersList();
+    io.to(socket.id).emit('waitingPlayers', {waitingPlayers : determinedPlayersList});
   });
+
+  socket.on('joinDeterminedPlayer', (playerName) => {
+    const opponentPlayerId = playAgainstDeterminedPlayerAndReturnOpponentPlayerId(socket.id, playerName.playerName);
+    if (opponentPlayerId == null) {
+      return;
+    }
+    SendGameStartedMessage(socket.id, opponentPlayerId);
+  });
+
+  
 
   socket.on('playerMove', (move) => {
     const opponentPlayerId = executeMove(socket.id, move);
@@ -68,6 +81,12 @@ io.on('connection', (socket) => {
     }
     io.to(opponentPlayerId).emit('opponentDisconnect', null);
   });
+
+  function SendGameStartedMessage(socketId: string, opponentPlayerId: string) {
+    console.log(`starting game between ${socketId} and ${opponentPlayerId}`);
+    io.to(opponentPlayerId).emit('startingGame', { opponentPlayerId: socketId });
+    io.to(socketId).emit('startingGame', { opponentPlayerId: opponentPlayerId });
+  }
 });
 
 // TODO: test code needs to be removed
@@ -80,3 +99,5 @@ httpServer.listen(PORT, () => {
   console.log(`The application is listening on port ${PORT}!`);
   initializePlayerState();
 });
+
+

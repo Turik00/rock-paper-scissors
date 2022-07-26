@@ -25,7 +25,7 @@ export const Button = styled.span`
   }
 `;
 
-export const ModalWrapper = styled.div`
+export const ModalContentWrapper = styled.div`
   background: ${defaultColor};
   height: fit-content;
   min-width: 20rem;
@@ -39,4 +39,6 @@ export const ModalWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  opacity: 1;
+  z-index: 999;
 `;

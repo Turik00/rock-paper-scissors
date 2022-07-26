@@ -14,9 +14,24 @@ export const initializePlayerState = () => {
   };
   const waitingPlayers = {
     randomPlayers: [],
-    determinedPlayers: [],
+    determinedPlayers: new Map<string, string>,
   };
   global.players = { playingPlayers, waitingPlayers };
+};
+
+export const getWaitingDeterminedPlayersList = (): string[] => {
+  return [...global.players.waitingPlayers.determinedPlayers.keys()];
+}
+
+export const addPlayerToDeterminedPlayersList = (playerName: string, playerSocketId: string): boolean => {
+  if (global.players.waitingPlayers.determinedPlayers.has(playerName)) {
+    console.log(`player ${playerName} already registered to the game`);
+    return false;
+  }
+  //TODO: consider timeout for waitingPlayers for a game
+  global.players.waitingPlayers.determinedPlayers.set(playerName, playerSocketId);
+  console.log(`player ${playerName} registered successfully`);
+  return true;
 };
 
 export const addPlayerToRandomPlayersList = (playerSocketId: string) => {
@@ -31,13 +46,23 @@ export const playAgainstRandomPlayerAndReturnRandomPlayerId = (playerId: string)
     addPlayerToRandomPlayersList(playerId);
     return;
   }
-  global.players.playingPlayers.playersMap.set(playerId, opponentPlayerId);
-  global.players.playingPlayers.playersMap.set(opponentPlayerId, playerId);
+  startNewGame(playerId, opponentPlayerId);
+  return opponentPlayerId;
+};
+
+export const playAgainstDeterminedPlayerAndReturnOpponentPlayerId = (playerId: string, opponentPlayerName: string): string | undefined => {
+  const opponentPlayerId = global.players.waitingPlayers.determinedPlayers.get(opponentPlayerName);
+  if (opponentPlayerId == null) {
+    console.error(`There is no such player as playerName: ${opponentPlayerName}`);
+    return;
+  }
   startNewGame(playerId, opponentPlayerId);
   return opponentPlayerId;
 };
 
 export const startNewGame = (playerId: string, opponentPlayerId: string) => {
+  global.players.playingPlayers.playersMap.set(playerId, opponentPlayerId);
+  global.players.playingPlayers.playersMap.set(opponentPlayerId, playerId);
   global.players.playingPlayers.playersState.set(playerId, { move: -1, score: 0 });
   global.players.playingPlayers.playersState.set(opponentPlayerId, { move: -1, score: 0 });
 };
@@ -80,7 +105,14 @@ export const getPlayerState = (playerId: string): IPlayersState => {
 
 export const playerDisconnect = (playerId: string): string | undefined => {
   global.players.waitingPlayers.randomPlayers = global.players.waitingPlayers.randomPlayers.filter((player) => player !== playerId);
-  global.players.waitingPlayers.determinedPlayers = global.players.waitingPlayers.determinedPlayers.filter((player) => player !== playerId);
+  
+  const determinedPlayersToRemove: string[] = [];
+  for (const [playerName, playerSocketId] of global.players.waitingPlayers.determinedPlayers) {
+    if (playerSocketId === playerId) {
+      determinedPlayersToRemove.push(playerName);
+    } 
+  }
+  determinedPlayersToRemove.forEach(playerName => global.players.waitingPlayers.determinedPlayers.delete(playerName));
 
   global.players.playingPlayers.playersState.delete(playerId);
   let opponentPlayerId = undefined;

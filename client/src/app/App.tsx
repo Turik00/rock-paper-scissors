@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import GameArea from './components/GameArea/GameArea';
-import { backendHttpApi } from './consts/consts';
+import { backendHttpUrl } from './consts/consts';
 import { defaultColor } from './consts/css-consts';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   // TODO: useEffect to wake up Heroku - needed only because using it
   useEffect(() => {
-    fetch(backendHttpApi).catch(reason =>{
+    fetch(backendHttpUrl).catch(reason =>{
       console.error(reason);
     });
     

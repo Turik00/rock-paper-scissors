@@ -7,7 +7,7 @@ import React, { useMemo, useState } from 'react';
 import StandoffBoard from '../StandoffBoard/StandoffBoard';
 import { useAppSelector } from '../../store/hooks';
 import { selectGameState } from '../../store/game-slice';
-import WaitingForPlayerToJoin from '../WaitingForPlayerToJoin/WaitingForPlayerToJoin';
+import WaitingForPlayerToJoin from '../Multiplayer/WaitingForPlayerToJoin/WaitingForPlayerToJoin';
 import ChooseGameMode from '../ChooseGameMode/ChooseGameMode';
 import ResetButton from '../ResetButton/ResetButton';
 import { GameStatus } from '../../../common/types';

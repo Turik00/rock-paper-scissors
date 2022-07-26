@@ -86,6 +86,7 @@ const gameSlice = createSlice({
     opponentPlayerDisconnected: (state) => {
       state.status = GameStatus.pendingGameModeSelection;
       window?.multiplayerSocket?.disconnect();
+      window.multiplayerSocket = null;
     },
   },
 });

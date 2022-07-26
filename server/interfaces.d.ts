@@ -8,7 +8,7 @@ interface IPlayingPlayers {
 
 interface IWaitingPlayers {
   randomPlayers: string[];
-  determinedPlayers: string[];
+  determinedPlayers: Map<string, string>; //<player name, socketid>
 }
 
 export interface IPlayers {
