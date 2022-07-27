@@ -1,18 +1,18 @@
 import { Box, List, ListItemButton, ListItemText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Modal from '../../../controls/Modal';
-import useSocket from '../../../hooks/useSocket';
+import useGameSocket from '../../../hooks/useSocket';
 
 const JoinMultiplayer = ({ setShowModalHandler }: { setShowModalHandler: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [waitingPlayers, setWaitingPlayers] = useState<string[]>([]);
-  const { socket, socketStartGame } = useSocket();
+  const [socket, socketHookOperations] = useGameSocket();
   useEffect(() => {
     socket?.emit('getAllWaitingDeterminedPlayers');
     socket?.on('waitingPlayers', (msg) => setWaitingPlayers(msg.waitingPlayers));
   }, [socket]);
   const handleListItemClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, playerName: string) => {
     socket?.emit('joinDeterminedPlayer', { playerName });
-    socketStartGame();
+    socketHookOperations.socketStartGame();
     setShowModalHandler(false);
   };
   return (

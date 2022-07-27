@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { globalExtended } from '../consts/consts';
 import { AppThunk, RootState } from './store';
 import { GameStatus, Gestures, GesturesNumber } from '../../common/types';
 import { determineStatus } from '../../common/common-logic';
 
-declare var window: Window & globalExtended;
 
 export interface GameState {
   score: number;
@@ -22,6 +20,7 @@ const initialState: GameState = {
 };
 
 const gameSlice = createSlice({
+
   name: 'game',
   initialState,
   reducers: {
@@ -85,8 +84,6 @@ const gameSlice = createSlice({
     },
     opponentPlayerDisconnected: (state) => {
       state.status = GameStatus.pendingGameModeSelection;
-      window?.multiplayerSocket?.disconnect();
-      window.multiplayerSocket = null;
     },
   },
 });
@@ -117,14 +114,6 @@ export const retrieveOpponentGesture = (): AppThunk => async (dispatch, getState
     opponentGesture = Math.floor(Math.random() * GesturesNumber);
   }
   dispatch(selectOpponentGesture(opponentGesture));
-};
-
-export const startMultiplayerGame = (): AppThunk => async (dispatch, getState) => {
-  window.multiplayerSocket?.on('playerStateUpdate', (payload: { opponentMove: Gestures; playerScore: number }) => {
-    dispatch(selectOpponentGesture(payload.opponentMove));
-    dispatch(updateScoreForMultiplayer(payload.playerScore));
-  });
-  dispatch(setMultiplayerGameStarted());
 };
 
 function resetSharedState(state: GameState) {

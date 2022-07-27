@@ -2,7 +2,7 @@ import { Alert, Snackbar } from '@mui/material';
 import { FormEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../../../controls/Modal';
-import useSocket from '../../../hooks/useSocket';
+import useGameSocket from '../../../hooks/useSocket';
 
 const Form = styled.form`
   color: #000;
@@ -11,13 +11,13 @@ const Form = styled.form`
 
 const CreateMultiplayerModal = ({ setShowModalHandler }: { setShowModalHandler: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [showError, setShowError] = useState<boolean>(false);
-  const {socket, socketStartGame} = useSocket();
+  const [socket, socketHookOperations] = useGameSocket();
   const inputEl = useRef<HTMLInputElement>(null);
   const createUserSubmitFormHandler = (event: FormEvent) => {
     event.preventDefault();
     socket?.emit('registerAsDeterminedPlayer', {playerName: inputEl.current?.value});
     socket?.on('playerAddedToDeterminedPlayers', () => {
-      socketStartGame();
+      socketHookOperations.socketStartGame();
       setShowModalHandler(false);
     });
     socket?.on('playerAlreadyExists', () => {

@@ -6,7 +6,7 @@ import { selectSinglePlayer } from '../../store/game-slice';
 import { useAppDispatch } from '../../store/hooks';
 import CreateMultiplayerModal from '../Multiplayer/CreateMultiplayer/CreateMultiplayer';
 import JoinMultiplayerModal from '../Multiplayer/JoinMultiplayer/JoinMultiplayer';
-import useSocket from '../../hooks/useSocket';
+import useGameSocket from '../../hooks/useSocket';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -25,7 +25,7 @@ const ChooseGameMode = () => {
   const [showCreateMultiplayerModal, setShowCreateMultiplayerModal] = useState<boolean>(false);
   const [showJoinMultiplayerModal, setShowJoinMultiplayerModal] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const {socket, socketStartGame} = useSocket();
+  const [socket, socketHookOperations] = useGameSocket();
 
   const singlePlayerClickHandler = useCallback(() => {
     dispatch(selectSinglePlayer());
@@ -36,8 +36,8 @@ const ChooseGameMode = () => {
       return;
     }
     socket.emit('joinRandomPlayer');
-    socketStartGame();
-  }, [socket, socketStartGame]);
+    socketHookOperations.socketStartGame();
+  }, [socket, socketHookOperations]);
 
   return (
     <React.Fragment>

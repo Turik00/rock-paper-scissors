@@ -1,27 +1,32 @@
 import { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { backendSocketUrl, globalExtended } from '../consts/consts';
-import { opponentPlayerDisconnected, selectMultiPlayer, startMultiplayerGame } from '../store/game-slice';
+import { Gestures } from '../../common/types';
+import { backendSocketUrl } from '../consts/consts';
+import { opponentPlayerDisconnected, selectMultiPlayer, selectOpponentGesture, setMultiplayerGameStarted, updateScoreForMultiplayer } from '../store/game-slice';
 import { useAppDispatch } from '../store/hooks';
 
-declare var window: Window & globalExtended;
+let multiplayerSocket: Socket | null;
 
-function useSocket() {
+function useGameSocket(): [Socket | null, {socketStartGame: () => void, socketDisconnect: () => void}] {
   const [socket, setSocket] = useState<Socket | null>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setSocket((prevState) => {
-      if (window.multiplayerSocket == null) {
-        window.multiplayerSocket = io(backendSocketUrl);
+    setSocket(() => {
+      if (multiplayerSocket == null) {
+        multiplayerSocket = io(backendSocketUrl);
       }
-      return window.multiplayerSocket;
+      return multiplayerSocket;
     });
   }, []);
 
   const socketStartGame = () => {
     socket?.on('startingGame', () => {
-      dispatch(startMultiplayerGame());
+      multiplayerSocket?.on('playerStateUpdate', (payload: { opponentMove: Gestures; playerScore: number }) => {
+        dispatch(selectOpponentGesture(payload.opponentMove));
+        dispatch(updateScoreForMultiplayer(payload.playerScore));
+      });
+      dispatch(setMultiplayerGameStarted());
     });
     socket?.on('opponentDisconnect', () => {
       dispatch(opponentPlayerDisconnected());
@@ -29,7 +34,13 @@ function useSocket() {
     dispatch(selectMultiPlayer());
   };
 
-  return {socket, socketStartGame};
+  const socketDisconnect = () => {
+    multiplayerSocket?.disconnect();
+    multiplayerSocket = null;
+  };
+
+  const socketHookOperations = {socketStartGame, socketDisconnect}
+  return [socket, socketHookOperations];
 }
 
-export default useSocket;
+export default useGameSocket;
