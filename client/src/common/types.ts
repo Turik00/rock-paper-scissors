@@ -17,3 +17,12 @@ export enum GameStatus {
     lose,
     tie,
 };
+
+export interface GameState {
+    score: number;
+    status: GameStatus;
+    playerGesture?: Gestures;
+    opponentGesture?: Gestures;
+    isMultiplayer: boolean;
+    multiplayerOpponentId?: string;
+  }

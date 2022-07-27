@@ -1,6 +1,5 @@
 import { determineStatus } from '../../../common/common-logic';
-import { GameState } from '../../store/game-slice';
-import { GameStatus } from '../../../common/types';
+import { GameStatus, GameState } from '../../../common/types';
 
 describe('GameArea component', () => {
   test('Determine victor logic test', () => {

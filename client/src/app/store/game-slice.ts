@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from './store';
-import { GameStatus, Gestures, GesturesNumber } from '../../common/types';
+import { GameState, GameStatus, Gestures, GesturesNumber } from '../../common/types';
 import { determineStatus } from '../../common/common-logic';
-
-
-export interface GameState {
-  score: number;
-  status: GameStatus;
-  playerGesture?: Gestures;
-  opponentGesture?: Gestures;
-  isMultiplayer: boolean;
-  multiplayerOpponentId?: string;
-}
 
 const initialState: GameState = {
   score: 0,

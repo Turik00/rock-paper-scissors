@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "serve": "nodemon server.ts",
-    "build": "npx tsc",
-    "start": "npm install && npx tsc && node dist/server.js"
+    "copy-common": "@powershell copy '../client/src/common/*' './common'",
+    "serve": "npm run copy-common && nodemon server.ts",
+    "build": "npm run copy-common && npx tsc"
   },
   "author": "",
   "license": "ISC",

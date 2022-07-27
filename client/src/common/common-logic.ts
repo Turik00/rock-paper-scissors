@@ -1,5 +1,4 @@
-import { GameState } from '../app/store/game-slice';
-import { GameStatus, Gestures } from './types';
+import { GameStatus, Gestures, GameState } from './types';
 
 export const determineStatus = (state: GameState) => {
   if (state.playerGesture === Gestures.paper) {
