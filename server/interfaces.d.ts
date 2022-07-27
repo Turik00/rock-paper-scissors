@@ -1,4 +1,4 @@
-import { Gestures } from '../client/src/common/types';
+import { Gestures } from './common/types';
 
 interface IPlayingPlayers {
   playersMap: Map<string, string>;

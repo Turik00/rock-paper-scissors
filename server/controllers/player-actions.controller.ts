@@ -1,5 +1,5 @@
 import { IPlayers, IPlayersState } from '../interfaces';
-import { GameStatus } from '../../client/src/common/types';
+import { GameStatus } from '../common/types';
 import { determineStatus } from '../common/common-logic';
 
 declare var global: typeof globalThis & {
