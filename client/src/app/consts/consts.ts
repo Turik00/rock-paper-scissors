@@ -1,5 +1,6 @@
 import { Socket } from 'socket.io-client';
 
+// Heroku backend
 const urlBase = 'rock-paper-scissors-turik-serv.herokuapp.com/';
 export let backendSocketUrl = `wss://${urlBase}`;
 export let backendHttpUrl = `https://${urlBase}`;
