@@ -2,12 +2,21 @@ import { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { Gestures } from '../../common/types';
 import { backendSocketUrl } from '../consts/consts';
-import { opponentPlayerDisconnected, selectMultiPlayer, selectOpponentGesture, setMultiplayerGameStarted, updateScoreForMultiplayer } from '../store/game-slice';
+import {
+  opponentPlayerDisconnected,
+  selectMultiPlayer,
+  selectOpponentGesture,
+  setMultiplayerGameStarted,
+  updateScoreForMultiplayer,
+} from '../store/game-slice';
 import { useAppDispatch } from '../store/hooks';
 
 let multiplayerSocket: Socket | null;
 
-function useGameSocket(): [Socket | null, {socketStartGame: () => void, socketDisconnect: () => void}] {
+function useGameSocket(): [
+  Socket | null,
+  { socketStartGame: () => void; socketPlayerMove: (gesture: Gestures) => void; socketDisconnect: () => void }
+] {
   const [socket, setSocket] = useState<Socket | null>(null);
   const dispatch = useAppDispatch();
 
@@ -34,12 +43,16 @@ function useGameSocket(): [Socket | null, {socketStartGame: () => void, socketDi
     dispatch(selectMultiPlayer());
   };
 
+  const socketPlayerMove = (gesture: Gestures) => {
+    multiplayerSocket?.emit('playerMove', gesture);
+  };
+
   const socketDisconnect = () => {
     multiplayerSocket?.disconnect();
     multiplayerSocket = null;
   };
 
-  const socketHookOperations = {socketStartGame, socketDisconnect}
+  const socketHookOperations = { socketStartGame, socketPlayerMove, socketDisconnect };
   return [socket, socketHookOperations];
 }
 
