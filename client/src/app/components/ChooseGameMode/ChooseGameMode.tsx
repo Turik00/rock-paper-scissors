@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { Button } from '../../consts/css-consts';
+import { Button, narrowHeightScreenContentWrapper } from '../../consts/css-consts';
 import { selectSinglePlayer } from '../../store/game-slice';
 import { useAppDispatch } from '../../store/hooks';
 import CreateMultiplayerModal from '../Multiplayer/CreateMultiplayer/CreateMultiplayer';
@@ -15,10 +15,16 @@ export const Wrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  ${narrowHeightScreenContentWrapper}
 `;
 
 export const GameModeButton = styled(Button)`
   width: 12rem;
+  @media screen and (max-width: 500px) {
+    height: 2.5rem;
+    font-size: 1.5rem;
+    width: 50vw;
+  }
 `;
 
 const ChooseGameMode = () => {

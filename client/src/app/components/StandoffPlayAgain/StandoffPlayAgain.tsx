@@ -9,6 +9,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
+  min-width: 12rem;
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 `;
 
 const VictoryText = styled.span`
@@ -21,9 +25,9 @@ const VictoryText = styled.span`
 const Button = styled.button`
   background: transparent;
   color: ${defaultColor};
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
+  font-size: 1.3rem;
+  margin: 1rem;
+  padding: 0.25rem 0.8rem;
   border: 2px solid ${defaultColor};
   border-radius: 3px;
   cursor: pointer;

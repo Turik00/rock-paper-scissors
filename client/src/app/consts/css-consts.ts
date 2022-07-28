@@ -1,8 +1,13 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const defaultColor = '#F8F8FF';
 export const defaultBlue = 'hsl(229, 64%, 46%)';
 
+export const narrowHeightScreenContentWrapper = css`
+  @media screen and (max-height: 450px) {
+    margin-top: 3rem;
+  }
+`;
 
 export const Button = styled.span`
   outline: hsl(217, 16%, 45%);
@@ -28,6 +33,7 @@ export const Button = styled.span`
 export const ModalContentWrapper = styled.div`
   background: ${defaultColor};
   height: fit-content;
+  max-height: 98vh;
   min-width: 20rem;
   position: fixed;
   top: 0;

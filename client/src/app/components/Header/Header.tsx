@@ -11,6 +11,9 @@ const Wrapper = styled.div`
   font-weight: bold;
   display: flex;
   justify-content: space-between;
+  @media screen and (max-height: 500px) {
+    font-size: 1rem;
+  }
 `;
 
 const TextArea = styled.p`

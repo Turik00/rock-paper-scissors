@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { globalExtended } from '../../../consts/consts';
 import { defaultColor } from '../../../consts/css-consts';
 import { selectGesture } from '../../../store/game-slice';
 import { useAppDispatch } from '../../../store/hooks';
@@ -18,8 +17,8 @@ export interface BasicGestureProps {
 }
 
 const BlankCircle = styled.div`
-  height: ${(props: BasicGestureProps) => props.circleDiameter}rem;
-  width: ${(props: BasicGestureProps) => props.circleDiameter}rem;
+  height: ${(props: BasicGestureProps) => props.circleDiameter}px;
+  width: ${(props: BasicGestureProps) => props.circleDiameter}px;
   border-radius: 50%;
   border: 1rem solid transparent;
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) padding-box,
@@ -66,14 +65,14 @@ const BasicHandGesture = (props: BasicGestureProps) => {
       {props.children != null ? (
         <Circle
           borderGradient={props.borderGradient}
-          circleDiameter={props.circleDiameter ?? 6}
+          circleDiameter={props.circleDiameter ?? 84}
           isActive={props.isActive ?? true}
           onClick={gestureClickHandler}
         >
           {props.children}
         </Circle>
       ) : (
-        <BlankCircle circleDiameter={props.circleDiameter ?? 6}/>
+        <BlankCircle circleDiameter={props.circleDiameter ?? 84}/>
       )}
     </React.Fragment>
   );

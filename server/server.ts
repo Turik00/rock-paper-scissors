@@ -54,8 +54,6 @@ io.on('connection', (socket) => {
     SendGameStartedMessage(socket.id, opponentPlayerId);
   });
 
-  
-
   socket.on('playerMove', (move) => {
     const opponentPlayerId = executeMove(socket.id, move);
     if (opponentPlayerId == null) {

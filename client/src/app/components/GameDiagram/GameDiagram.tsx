@@ -3,7 +3,7 @@ import PaperHandGesture from '../HandGestures/PaperHandGesture/PaperHandGesture'
 import RockHandGesture from '../HandGestures/RockHandGesture/RockHandGesture';
 import ScissorsHandGesture from '../HandGestures/ScissorsHandGesture/ScissorsHandGesture';
 
-const circleDiameter = 6;
+const circleDiameter = 84;
 const Wrapper = styled.div`
   width: 100%;
   height: 80%;
@@ -11,6 +11,17 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (min-height: 550px) and (max-height: 650px){
+    transform: scale(0.9);
+  }
+
+  @media screen and (min-height: 460px) and (max-height: 550px){
+    transform: scale(0.75);
+  }
+
+  @media screen and (max-height: 460px){
+    transform: scale(0.55);
+  }
 `;
 
 const Triangle = styled.div`
@@ -30,7 +41,7 @@ const TriangleBase = styled.div`
 `;
 const TriangleTop = styled(TriangleBase)`
   justify-content: space-between;
-  top: -${circleDiameter / 2}rem;
+  top: -${circleDiameter / 2}px;
 `;
 
 const TriangleBottom = styled(TriangleBase)`

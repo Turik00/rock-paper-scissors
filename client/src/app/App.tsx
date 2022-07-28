@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import GameArea from './components/GameArea/GameArea';
-import { backendHttpUrl } from './consts/consts';
 import { defaultColor } from './consts/css-consts';
 
 const GlobalStyle = createGlobalStyle`
@@ -16,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     @media screen and (min-width: 500px) and (max-width: 899px) {
       font-size: 12px;
     }
-    @media screen and (min-width: 376px) and (max-width: 499px) {
+    @media screen and (max-width: 499px) {
       font-size: 10px;
     }
     @media screen and (max-width: 375px) {

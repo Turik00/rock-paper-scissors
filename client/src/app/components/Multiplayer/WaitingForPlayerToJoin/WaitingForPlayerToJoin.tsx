@@ -1,11 +1,12 @@
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import styled from 'styled-components';
-import { defaultColor, ModalContentWrapper } from '../../../consts/css-consts';
+import { defaultColor, ModalContentWrapper, narrowHeightScreenContentWrapper } from '../../../consts/css-consts';
 
 const Wrapper = styled(ModalContentWrapper)`
   align-items: center;
   background: transparent;
   height: fit-content;
+  ${narrowHeightScreenContentWrapper}
 `;
 
 const LoaderWrapper = styled.div`
